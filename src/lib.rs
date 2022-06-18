@@ -40,7 +40,7 @@ mod tests {
         assert_eq!(a.len(), exp.len());
         for i in 0..a.len() {
             if a[i] != exp[i] {
-                assert!(false, "index {} was {}, expected {}", i, a[i], exp[i]);
+                panic!("index {} was {}, expected {}", i, a[i], exp[i]);
             }
         }
     }

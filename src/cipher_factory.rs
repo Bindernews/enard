@@ -68,6 +68,11 @@ impl<C> SimpleCipherFactory<C> {
         }
     }
 }
+impl<C> Default for SimpleCipherFactory<C> {
+    fn default() -> Self {
+        Self::new()
+    }
+}
 impl<C> CipherFactory<C> for SimpleCipherFactory<C>
 where
     C: CipherName + IvSizeUser + KeySizeUser + KeyIvInit,
