@@ -29,22 +29,13 @@ jobs:
           - ubuntu-latest
           - macos-latest
           - windows-latest
-        exe_file: [enard-cli, enard-cli, enard-cli.exe]
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v3
       - uses: actions-rs/toolchain@v1
         with:
           toolchain: stable
-      - run: |
-          set -euo pipefail
-          cd cli
-          cargo build --release
-          tag="${GITHUB_REF#refs/tags/}"
-          zip_name="enard-cli_${tag}_${OS_NAME}.zip"
-          zip ${zip_name} ${EXE_FILE}
-          gh release upload "${tag}" "${zip_name}" --clobber
-        shell: bash
+      - run: cd cli && bash ./release.sh
         env:
           EXE_FILE: target/release/${{ matrix.exe_file }}
           OS_NAME: ${{ matrix.os }}
