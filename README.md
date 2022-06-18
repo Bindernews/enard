@@ -19,12 +19,18 @@ for names in archive.file_names() {
 }
 ```
 
+# Creating Enard Files
+Enard files can be created either using the library directly, or with the [CLI][enard-cli].
+
 # Details
 
 Enard uses a stream cipher for encryption to be able to jump to any point in the file when
 decrypting, allowing the reader to implement `std::io::Seek` and thus act like a file. 
 Enard also uses a SHA2-256 Message Authentication Code to verify that the file hasn't
 been modified. 
+
+For more details about the file format see
+[format.md](https://github.com/Bindernews/enard/blob/main/format.md).
 
 # F.A.Q.
 
@@ -47,3 +53,4 @@ implementations simply don't support it.
 There are many reasonable archive formats out there that are well-specified and have well-tested
 implementations. Enard isn't trying to reinvent the wheel, just put a bike-lock on it.
 
+[enard-cli]: https://github.com/Bindernews/enard/tree/main/cli
