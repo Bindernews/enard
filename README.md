@@ -19,6 +19,9 @@ for names in archive.file_names() {
 }
 ```
 
+# MSRV
+MSRV is currently 1.61.0
+
 # Creating Enard Files
 Enard files can be created either using the library directly, or with the [CLI][enard-cli].
 
