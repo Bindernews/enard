@@ -12,7 +12,7 @@ os_name="${OS_NAME%-latest}"
 zip_name="${NAME}_${tag}_${os_name}.zip"
 # Determine the executable file name and extension
 exe_file="target/release/${NAME}"
-if [ "$os_name" == "windows" ]
+if [ "$os_name" == "windows" ]; then
   exe_file="${exe_file}.exe"
 fi
 # Build, zip, and upload to the tagged release
