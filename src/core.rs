@@ -176,13 +176,13 @@ where
         let mut magic_buf = [0u8; MAGIC.len()];
         self.reader.read_exact(&mut magic_buf)?;
         if &magic_buf != MAGIC {
-            return Err(EnardError::new_invalid_magic(MAGIC, &magic_buf).into());
+            return Err(EnardError::new_invalid_magic(MAGIC, &magic_buf));
         }
 
         let version = self.reader.read_u16::<LE>()?;
         match version {
             1 => self.read_v1(),
-            _ => Err(EnardError::UnsupportedVersion { version }.into()),
+            _ => Err(EnardError::UnsupportedVersion { version }),
         }
     }
 
@@ -253,7 +253,7 @@ where
     pub fn read_u16_block<R2: Read>(mut reader: R2, limit: usize) -> Result<Vec<u8>, EnardError> {
         let size = reader.read_u16::<LE>()? as usize;
         if size > limit {
-            return Err(EnardError::new_block_size(size as u64, limit as u64).into());
+            return Err(EnardError::new_block_size(size as u64, limit as u64));
         }
         Ok(Self::read_vec(reader, size)?)
     }
@@ -352,10 +352,10 @@ where
         self.start_pos = self.inner.stream_position()?;
 
         // Write magic and version
-        self.inner.write(MAGIC)?;
+        self.inner.write_all(MAGIC)?;
         self.inner.write_u16::<LE>(1)?;
         // Write placeholders for header and data sizes
-        self.inner.write(&[0u8; 4 + 8])?;
+        self.inner.write_all(&[0u8; 4 + 8])?;
         // Track the header size
         let mut hs = 0;
         // Write required blocks
@@ -430,15 +430,15 @@ where
         n += 1;
 
         for (key, val) in meta.iter() {
-            Self::block_size_check(&key, u8::MAX as usize)?;
-            Self::block_size_check(&val, u16::MAX as usize)?;
+            Self::block_size_check(key, u8::MAX as usize)?;
+            Self::block_size_check(val, u16::MAX as usize)?;
             let k_len = key.len() as u8;
             let v_len = val.len() as u16;
             // Write data
             self.mac_write(&k_len.to_le_bytes())?;
-            self.mac_write(&key)?;
+            self.mac_write(key)?;
             self.mac_write(&v_len.to_le_bytes())?;
-            self.mac_write(&val)?;
+            self.mac_write(val)?;
             // Update size
             n += 1 + key.len() + 2 + val.len();
         }

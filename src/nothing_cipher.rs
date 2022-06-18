@@ -17,6 +17,11 @@ impl NothingCipher {
         Self { pos: 0 }
     }
 }
+impl Default for NothingCipher {
+    fn default() -> Self {
+        Self::new()
+    }
+}
 impl StreamCipher for NothingCipher {
     fn try_apply_keystream_inout(
         &mut self,

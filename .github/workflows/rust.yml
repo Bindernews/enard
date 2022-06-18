@@ -10,9 +10,19 @@ env:
   CARGO_TERM_COLOR: always
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
     - name: Run tests
       run: cargo test --verbose
+    - name: Run clippy
+      run: cargo clippy
+
+  # build-cli:
+  #   if: github.ref == 'refs/heads/main'
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #   - uses: actions/checkout@v3
+  #   - name: Build CLI
+  #     run: cd cli && cargo build --release
