@@ -7,6 +7,7 @@ mod core;
 mod dyn_cipher;
 mod error;
 pub mod nothing_cipher;
+pub mod stream;
 
 pub use crate::core::{EnardReader, EnardWriter, MetaMap};
 pub use crate::dyn_cipher::{BoxDynCipher, DynCipher, DynCipherCore};

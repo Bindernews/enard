@@ -106,7 +106,6 @@ where
         self.cipher
             .try_apply_keystream(&mut buf[0..n])
             .map_err(cipher_to_io_error)?;
-        // println!("current = {}, n = {}, cipher_pos = {} -> {}", self.current, n, cipher_pos_before, cipher_pos);
         Ok(n)
     }
 }
